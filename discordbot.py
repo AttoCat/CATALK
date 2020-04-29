@@ -8,4 +8,4 @@ async def on_ready():
     print(discord.__version__)
 
 client.run("NzA0NjE5NzU0MTA2NzgxNzQ5.XqfyeA.4tGoPySZyW7TL3jSoN5cdIPiJuQ")
-# コメントテスト
+# コメントテスト　成功できて嬉しい
