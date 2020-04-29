@@ -1,6 +1,7 @@
 import discord
 import dotenv
 import os
+
 dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
