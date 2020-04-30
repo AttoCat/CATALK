@@ -3,7 +3,6 @@ import os
 import discord
 import dotenv
 
-
 dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
@@ -13,5 +12,7 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 async def on_ready():
     print("on_ready")
     print(discord.__version__)
+
+# ここから書いてく
 
 client.run(TOKEN)
