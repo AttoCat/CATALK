@@ -2,6 +2,7 @@ import os
 
 import discord
 import dotenv
+import datetime
 
 dotenv.load_dotenv()
 client = discord.Client()
