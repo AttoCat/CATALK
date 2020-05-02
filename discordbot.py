@@ -13,7 +13,7 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 @client.event
 async def greet():
     channel = client.get_channel(Start_ID)
-    await channnel.send("正常に起動しました")
+    await channel.send("正常に起動しました")
 
 
 @client.event
