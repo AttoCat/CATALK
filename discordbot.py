@@ -23,11 +23,11 @@ async def on_ready():
     print(discord.__version__)
     await greet()
 
-
+morningmessage = "おはようございますご主人さま。今日の日付は" + d_today + "日です。"
 @client.event
 async def on_message(message):
     if message.content == "おはよう！":
-        await message.channel.send("おはようございますご主人さま" + "今日の日付は" + d_today + "日です。")
+        await message.channel.send(morningmessage)
 
 
 client.run(TOKEN)
