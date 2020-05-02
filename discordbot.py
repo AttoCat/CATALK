@@ -10,7 +10,7 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 Start_ID = 704619077141921872
 d_today = datetime.date.today()
-morningmessage = "おはようございますご主人さま。今日の日付は" + d_today + "日です。"
+morningmessage = "おはようございますご主人さま。今日の日付は" + str(d_today) + "日です。"
 
 
 @client.event
