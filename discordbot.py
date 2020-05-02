@@ -15,7 +15,7 @@ async def on_ready():
 
 
 @cilent.event
-async def on_message(message)
+async def on_message(message):
 if message.content == "おはよう！":
     await message.channel.send("おはようございますご主人さま" + "今日の日付は" + date.today() + "日です。")
 
