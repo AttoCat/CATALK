@@ -7,7 +7,7 @@ dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-Start_ID = 704619077141921872
+Start_ID = 706779308211044352
 d_now = datetime.datetime.now()
 
 
