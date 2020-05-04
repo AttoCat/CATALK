@@ -27,6 +27,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content == "おはよう！":
-        await message.channel.send("おはようございます。" + d_now.strftime('%m月%d日です。'))
+        await message.channel.send(d_now.strftime('おはようございます。今日の日付は%m月%d日です。'))
 
 client.run(TOKEN)
