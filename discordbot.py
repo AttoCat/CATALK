@@ -28,7 +28,9 @@ async def on_ready():
 async def on_message(message):
     if message.content == "おはよう！":
         if message.channel.id == Start_ID:
-            await message.channel.send('エラー ここでは実行できません')
+            await message.channel.send(
+                f'Error: ここでは実行できません\n'
+                f'  Cannot perform this operation here.')
             return
         await message.channel.send(d_now.strftime(
             f'おはようございます。\n'
