@@ -27,11 +27,11 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content == "おはよう！":
-        await message.channel.send(d_now.strftime(
-            f'おはようございます。\n'
-            f'今日の日付は%-m月%-d日です。'))
         if message.channel.id == Start_ID:
             await message.channel.send('エラー ここでは実行できません')
             return
+        await message.channel.send(d_now.strftime(
+            f'おはようございます。\n'
+            f'今日の日付は%-m月%-d日です。'))
 
 client.run(TOKEN)
