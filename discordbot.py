@@ -28,9 +28,12 @@ async def on_ready():
 async def on_message(message):
     if message.content == "おはよう！":
         if message.channel.id == Start_ID:
-            await message.channel.send(
-                f'Error: ここでは実行できません\n'
-                f'  Cannot perform this operation here.')
+            embed = discord.Embed(
+                title="Error", description="ここでは実行できません！", color=0xff0000)
+            embed.add_field(
+                name="", value="Cannot perform this operation here.", inline=False)
+            await client.get_channel(Start_ID).send(embed=embed, delete_after=10)
+            await message.delete()
             return
         await message.channel.send(d_now.strftime(
             f'おはようございます。\n'
