@@ -31,7 +31,7 @@ async def on_message(message):
             embed = discord.Embed(
                 title="Error", description="ここでは実行できません！", color=0xff0000)
             embed.add_field(
-                name="", value="Cannot perform this operation here.", inline=False)
+                name=" ", value="Cannot perform this operation here.", inline=False)
             await client.get_channel(Start_ID).send(embed=embed, delete_after=10)
             await message.delete()
             return
