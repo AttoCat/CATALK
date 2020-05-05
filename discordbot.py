@@ -30,9 +30,10 @@ async def on_message(message):
         if message.channel.id == Start_ID:
             embed = discord.Embed(
                 title="Error",
-                description="ここでは実行できません！ \n Cannot perform this operation here.",
+                description="ここでは実行できません！ \n Can't run here.",
                 color=0xff0000)
-            await client.get_channel(Start_ID).send(embed=embed, delete_after=10)
+            await client.get_channel(Start_ID).send(
+                embed=embed, delete_after=10)
             await message.delete()
             return
         await message.channel.send(d_now.strftime(
