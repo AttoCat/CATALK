@@ -26,7 +26,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.content == "おはよう！":
+    if message.content == ("おはよう！" or "おはよう!"):
         if message.channel.id == Start_ID:
             embed = discord.Embed(
                 title="Error",
