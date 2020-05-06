@@ -38,17 +38,17 @@ async def on_message(message):
                 embed=embed, delete_after=10)
             await message.delete()
             return
-        elif 11 < d_now.hour < 18:
+        elif 11 <= d_now.hour <= 18:
             await message.channel.send(d_now.strftime(
                 f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n"
                 f"今日の日付は%-m月%-d日です。"))
             return
-        elif 18 < d_now.hour < 2:
+        elif 19 <= d_now.hour <= 2:
             await message.channel.send(d_now.strftime(
                 f"こんばんは。もう夜です。朝ではないこと、本当はあなたもわかっているんでしょう？\n"
                 f"今日の日付は%-m月%-d日です。"))
             return
-        elif 2 < d_now.hour < 5:
+        elif 3 <= d_now.hour <= 5:
             await message.channel.send(d_now.strftime(
                 f"おはようございます、なんでしょうか。まだ日は昇っていませんが。\n"
                 f"今日の日付は%-m月%-d日です。"))
