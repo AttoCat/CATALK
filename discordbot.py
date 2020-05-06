@@ -1,14 +1,18 @@
+import asyncio
 import os
+import pytz
 
-import discord
 import dotenv
 import datetime
+import discord
+
 dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 Start_ID = 706779308211044352
-d_now = datetime.datetime.now()
+jst = pytz.timezone('Asia/Tokyo')
+d_now = datetime.datetime.now(tz=jst)
 
 
 @client.event
