@@ -43,6 +43,14 @@ async def on_message(message):
                 f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n"
                 f"今日の日付は%-m月%-d日です。"))
             return
+        elif 18 < (d_now.hour) < 2:
+            await message.channel.send(d_now.strftime(
+                f"こんばんは。もう夜です。朝ではないこと、本当はあなたもわかっているんでしょう？\n"
+                f"今日の日付は%-m月%-d日です。"))
+        elif 2 < (d_now.hour) < 5:
+            await message.channel.send(d_now.strftime(
+                f"おはようございます、なんでしょうか。まだ日は昇っていませんが。\n"
+                f"今日の日付は%-m月%-d日です。"))
         else:
             await message.channel.send(d_now.strftime(
                 f"おはようございます。\n"
