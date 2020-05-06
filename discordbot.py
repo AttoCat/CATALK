@@ -40,9 +40,9 @@ async def on_message(message):
         d_now = datetime.utcnow() + timedelta(hours=9)
         d_today = d_now.strftime(f"今日の日付は%-m月%-d日です。")
         if 11 < (d_now.hour) < 18:
-            msg = f"おはようございます。\n{d_today}"
+            content = f"おはようございます。\n{d_today}"
         else:
-            msg = f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n{d_today}"
-        await message.channel.send(msg)
+            content = f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n{d_today}"
+        await message.channel.send(content)
 
 client.run(TOKEN)
