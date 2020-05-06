@@ -27,6 +27,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if (message.content == "おはよう！") or (message.content == "おはよう!"):
+        d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         if message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
             embed = discord.Embed(
                 title="Error",
@@ -37,8 +38,7 @@ async def on_message(message):
                 embed=embed, delete_after=10)
             await message.delete()
             return
-        d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
-        if 11 < (d_now.hour) < 18:
+        elif 11 < (d_now.hour) < 18:
             await message.channel.send(d_now.strftime(
                 f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n"
                 f"今日の日付は%-m月%-d日です。"))
