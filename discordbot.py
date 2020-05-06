@@ -47,6 +47,5 @@ async def on_message(message):
             await message.channel.send(d_now.strftime(
                 f"おはようございます。\n"
                 f"今日の日付は%-m月%-d日です。"))
-            return
 
 client.run(TOKEN)
