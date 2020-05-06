@@ -1,5 +1,4 @@
 import os
-import pytz
 
 import dotenv
 import datetime
@@ -10,8 +9,7 @@ client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 Start_ID = 706779308211044352
-jst = pytz.timezone('Asia/Tokyo')
-d_now = datetime.datetime.now()
+d_now = datetime.datetime.today()
 
 
 @client.event
