@@ -38,11 +38,15 @@ async def on_message(message):
             await message.delete()
             return
         d_now = datetime.utcnow() + timedelta(hours=9)
-        d_today = d_now.strftime(f"今日の日付は%-m月%-d日です。")
         if 11 < (d_now.hour) < 18:
-            msg = f"おはようございます。\n{d_today}"
+            await message.channel.send(d_now.strftime(
+                f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n"
+                f"今日の日付は%-m月%-d日です。"))
+            return
         else:
-            msg = f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n{d_today}"
-        await message.channel.send(msg)
+            await message.channel.send(d_now.strftime(
+                f"おはようございます。\n"
+                f"今日の日付は%-m月%-d日です。"))
+            return
 
 client.run(TOKEN)
