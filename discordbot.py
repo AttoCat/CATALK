@@ -1,7 +1,7 @@
 import os
 
 import dotenv
-from datetime import datetime, timedelta
+import datetime
 import discord
 
 dotenv.load_dotenv()
@@ -37,7 +37,7 @@ async def on_message(message):
                 embed=embed, delete_after=10)
             await message.delete()
             return
-        d_now = datetime.utcnow() + timedelta(hours=9)
+        d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         if 11 < (d_now.hour) < 18:
             await message.channel.send(d_now.strftime(
                 f"こんにちは。もう正午を過ぎています。「おはよう」と言うには遅い時間ですよ。\n"
