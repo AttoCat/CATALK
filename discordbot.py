@@ -12,7 +12,7 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 Start_ID = 706779308211044352
 jst = pytz.timezone('Asia/Tokyo')
-d_now = datetime.datetime.now(tz=jst)
+d_now = datetime.datetime.now()
 
 
 @client.event
