@@ -9,7 +9,6 @@ client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 Start_ID = 706779308211044352
-d_now = datetime.utcnow() + timedelta(hours=9)
 
 
 @client.event
@@ -27,6 +26,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    d_now = datetime.utcnow() + timedelta(hours=9)
     if (message.content == "おはよう！") or (message.content == "おはよう!"):
         if message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
             embed = discord.Embed(
