@@ -38,7 +38,7 @@ async def on_message(message):
             await message.delete()
             return
         d_now = datetime.utcnow() + timedelta(hours=9)
-        d_today = d_now.strftime(f"今日の日付は%-m月%-d日です。")
+        d_today = d_now.strftime("今日の日付は%-m月%-d日です。")
         if 11 < (d_now.hour) < 18:
             content = f"おはようございます。\n{d_today}"
         else:
