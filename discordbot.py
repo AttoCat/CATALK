@@ -28,8 +28,7 @@ async def on_ready():
 async def on_message(message):
     if (message.content == "おはよう！") or (message.content == "おはよう!"):
         d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
-        d_today = "今日の日付は" + \
-            d_now.strftime("%-m{0}%-d{1}").format(*"月日") + "です。"
+        d_today = d_now.strftime("今日の日付は % -m月 % -d日です。")
         if message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
             embed = discord.Embed(
                 title="Error",
