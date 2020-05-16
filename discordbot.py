@@ -26,6 +26,16 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
+        embed = discord.Embed(
+            title="Error",
+            description=(
+                "ここでは実行できません！\nCannot perform this operation here."),
+            color=0xff0000)
+        await message.delete()
+        await client.get_channel(Start_ID).send(
+            embed=embed, delete_after=10)
+        return
     if (message.content == "やあ！") or (message.content == "やあ!"):
         d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         d_today = d_now.strftime(f"\n今日の日付は%-m月%-d日です。")
@@ -56,16 +66,6 @@ async def on_message(message):
             "こんばんは。学生諸君はもう寝たほうがいいですね。開発者も学生ですけど…。",
             "Good evening. 深夜帯、かっこよく言うとmidnightですね。もっと英語使いたいです。"
         ]
-        if message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
-            embed = discord.Embed(
-                title="Error",
-                description=(
-                    "ここでは実行できません！\nCannot perform this operation here."),
-                color=0xff0000)
-            await message.delete()
-            await client.get_channel(Start_ID).send(
-                embed=embed, delete_after=10)
-            return
         msg = morning[d_now.hour]
         await message.channel.send(f"{msg}" + d_today)
     if message.content in ("ct!ttset"):
