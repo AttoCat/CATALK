@@ -58,7 +58,7 @@ async def ttset(message):
     tt = message.content[9:].split(",")
     embed = discord.Embed(
         title="時間割",
-        description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{[2]}\n{[3]}\n{[4]}\n{[5]}\n{[6]}",
+        description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{tt[2]}\n{tt[3]}\n{tt[4]}\n{tt[5]}\n{tt[6]}",
         color=0x0080ff)
     await client.get_channel(ttchannel).send(embed=embed)
 
