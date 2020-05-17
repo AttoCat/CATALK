@@ -88,6 +88,11 @@ async def ttset(message):
     await client.get_channel(TT_ID).send(embed=embed)
 
 
+async def ttedit(message):
+    TT_ID = 711397925103599621
+    await client.get_chennel(TT_ID).send(embed=ttset(message).embed)
+
+
 @client.event
 async def on_message(message):
     if message.author.bot:
@@ -106,5 +111,7 @@ async def on_message(message):
         await aisatu(message)
     elif message.content.startswith("ct!ttset "):
         await ttset(message)
+    elif message.content.startswith("ct!ttedit "):
+        await ttedit(message)
 
 client.run(TOKEN)
