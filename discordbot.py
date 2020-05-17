@@ -56,10 +56,9 @@ async def aisatu(message):
 async def ttset(message):
     TT_ID = 711397925103599621
     tt = message.content[9:].split(",")
-    content1 = tt[0]
     embed = discord.Embed(
         title="時間割",
-        description=(f"明日の時間割" + content1),
+        description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{tt[2]}\n{tt[3]}\n{tt[4]}\n{tt[5]}\n{tt[6]}",
         color=0x0080ff)
     await client.get_channel(TT_ID).send(embed=embed)
 
@@ -81,6 +80,6 @@ async def on_message(message):
     elif (message.content == "やあ！") or (message.content == "やあ!"):
         await aisatu(message)
     elif message.content.startswith("ct!ttset "):
-        ttset(message)
+        await ttset(message)
 
 client.run(TOKEN)
