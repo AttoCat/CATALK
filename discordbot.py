@@ -80,6 +80,13 @@ async def ttset(message):
             color=0xff0000)
         await message.channel.send(embed=embed, delete_after=10)
         return
+    elif tt not in classlist:
+        await message.delete()
+        embed = discord.Embed(
+            title="Error",
+            description=f"不正な引数です！\nInvalid argument passed.",
+            color=0xff0000)
+        await message.channel.send(embed=embed, delete_after=10)
     for jugyo in tt:
         num += 1
         t = f"{num}時間目"
