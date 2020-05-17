@@ -60,7 +60,7 @@ async def ttset(message):
     num = 0
     TT_ID = 711397925103599621
     tt = message.content[9:].split()
-    embed = discord.Embed(
+    ttembed = discord.Embed(
         title="時間割",
         description="明日の時間割",
         color=0x0080ff)
@@ -75,8 +75,10 @@ async def ttset(message):
     for jugyo in tt:
         num += 1
         t = f"{num}時間目"
-        embed.add_field(name=t,
-                        value=tt[num - 1], inline=False)
+        ttembed.add_field(
+            name=t,
+            value=tt[num - 1],
+            inline=False)
         if not tt[num - 1] in classlist:
             await message.delete()
             embed = discord.Embed(
@@ -85,6 +87,8 @@ async def ttset(message):
                 color=0xff0000)
             await message.channel.send(embed=embed, delete_after=10)
             return
+    global embed
+    embed = ttembed
     await client.get_channel(TT_ID).send(embed=embed)
 
 
