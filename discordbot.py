@@ -61,11 +61,11 @@ async def ttset(message):
         title="時間割",
         description="明日の時間割",
         color=0x0080ff)
-    for num in tt:
+    for jugyo in tt:
+        num += 1
         t = f"{num}時間目"
         embed.add_field(name=t,
-                        value=tt[num + 1 - 1], inline=False)
-        num += 1
+                        value=tt[num - 1], inline=False)
     await client.get_channel(TT_ID).send(embed=embed)
 
 
