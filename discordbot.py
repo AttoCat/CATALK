@@ -55,7 +55,7 @@ async def aisatu(message):
 
 async def ttset(message):
     TT_ID = 711397925103599621
-    tt = message.content[9:].split(",")
+    tt = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
         description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{tt[2]}\n{tt[3]}\n{tt[4]}\n{tt[5]}\n{tt[6]}",
