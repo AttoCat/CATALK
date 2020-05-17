@@ -61,7 +61,7 @@ async def ttset(message):
         description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{tt[2]}\n{tt[3]}\n{tt[4]}\n{tt[5]}\n{tt[6]}",
         color=0x0080ff)
     channel = 711397925103599621
-    await channel.send(tt)
+    await channel.send(embed=embed)
 
 
 @client.event
