@@ -71,6 +71,6 @@ async def on_message(message):
         msg = morning[d_now.hour]
         await message.channel.send(f"{msg}" + d_today)
     if message.content.startswith("ct!ttset"):
-        await message.channel.send("まだこのコマンドは準備中です！")
-
+        tt = message.content.split(",")
+        await message.channel.send(tt)
 client.run(TOKEN)
