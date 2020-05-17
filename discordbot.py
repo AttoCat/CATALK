@@ -9,7 +9,6 @@ client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 Start_ID = 706779308211044352
-TT_ID = 711397925103599621
 
 
 @client.event
@@ -55,13 +54,14 @@ async def aisatu(message):
 
 
 async def ttset(message):
+    TT_ID = 711397925103599621
     tt = message.content[9:].split(",")
     embed = discord.Embed(
         title="時間割",
-        description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{tt[2]}\n{tt[3]}\n{tt[4]}\n{tt[5]}\n{tt[6]}",
+        description="明日の時間割",
         color=0x0080ff)
-    await client.get_channel(TT_ID).send(
-        embed=embed, delete_after=60)
+    await client.get_channel(TT_ID).send(embed=embed)
+    await message.channel.send(tt)
 
 
 @client.event
