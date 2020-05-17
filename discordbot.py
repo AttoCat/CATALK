@@ -71,6 +71,6 @@ async def on_message(message):
         msg = morning[d_now.hour]
         await message.channel.send(f"{msg}" + d_today)
     if message.content.startswith("ct!ttset"):
-        tt = message.content.split(",")
+        tt = message.content[9:].split(",")
         await message.channel.send(tt)
 client.run(TOKEN)
