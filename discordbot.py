@@ -54,6 +54,9 @@ async def aisatu(message):
 
 
 async def ttset(message):
+    classlist = [
+        "英語", "国語", "数学", "理科", "社会", "保体",
+        "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
     TT_ID = 711397925103599621
     tt = message.content[9:].split()
@@ -64,10 +67,18 @@ async def ttset(message):
     if len(tt) > 6:
         await message.delete()
         embed = discord.Embed(
-            title="Error", description=f"引数の数が不正です！\nInvalid input.",
+            title="Error",
+            description=f"引数の数が不正です！\nInvalid input.",
             color=0xff0000)
         await message.channel.send(embed=embed, delete_after=10)
         return
+    elif tt not in classlist:
+        await message.delete()
+        embed = discord.Embed(
+            title="Error",
+            description=f"不正な引数です！\nInvalid argument passed.",
+            color=0xff0000)
+        await message.channel.send(embed=embed, delete_after=10)
     for jugyo in tt:
         num += 1
         t = f"{num}時間目"
