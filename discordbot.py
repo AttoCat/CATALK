@@ -54,18 +54,18 @@ async def aisatu(message):
 
 
 async def ttset(message):
+    num = 0
     TT_ID = 711397925103599621
     tt = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
         description="明日の時間割",
         color=0x0080ff)
-    num = 0
     for num in tt:
-        num += 1
-        t = str(num) + "時間目"
+        t = f"{num}時間目"
         embed.add_field(name=t,
                         value=tt[num + 1 - 1], inline=False)
+        num += 1
     await client.get_channel(TT_ID).send(embed=embed)
 
 
