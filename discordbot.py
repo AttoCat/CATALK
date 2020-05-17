@@ -62,8 +62,12 @@ async def ttset(message):
         description="明日の時間割",
         color=0x0080ff)
     if len(tt) > 6:
+        await message.delete()
         embed = discord.Embed(
-            title="Error", description=f"引数の数が不正です！\nInvalid input.")
+            title="Error", description=f"引数の数が不正です！\nInvalid input.",
+            color=0xff0000)
+        await message.channel.send(embed=embed, delete_after=10)
+        return
     for jugyo in tt:
         num += 1
         t = f"{num}時間目"
