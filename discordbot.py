@@ -63,7 +63,7 @@ async def ttset(message):
     num = 0
     for num in tt:
         num = num + 1
-        embed.add_field(name=str(num + 1) + "時間目",
+        embed.add_field(name=str(num) + "時間目",
                         value=tt[num + 1 - 1], inline=False)
     await client.get_channel(TT_ID).send(embed=embed)
 
