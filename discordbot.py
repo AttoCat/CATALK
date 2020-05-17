@@ -56,13 +56,10 @@ async def aisatu(message):
 async def ttset(message):
     ttchannel = 711397925103599621
     tt = message.content[9:].split(",")
-    embed = discord.Embed(title="時間割", description="明日の時間割", color=0x0080ff)
-    embed.add_field(name="1.", value=tt[0], inline=False)
-    embed.add_field(name="2.", value=tt[1], inline=False)
-    embed.add_field(name="3.", value=tt[2], inline=False)
-    embed.add_field(name="4.", value=tt[3], inline=False)
-    embed.add_field(name="5.", value=tt[4], inline=False)
-    embed.add_field(name="6.", value=tt[5], inline=False)
+    embed = discord.Embed(
+        title="時間割",
+        description=f"明日の時間割\n{tt[0]}\n{tt[1]}\n{[2]}\n{[3]}\n{[4]}\n{[5]}\n{[6]}",
+        color=0x0080ff)
     await client.get_channel(ttchannel).send(embed=embed)
 
 
