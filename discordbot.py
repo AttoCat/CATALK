@@ -94,15 +94,16 @@ async def ttset(message):
 
 
 async def ttedit(message):
+    embed = ttembed
     contentlist = message.content[10:].split()
     time = f"{contentlist[0]}時間目"
     va = f"{contentlist[1]}"
-    newembed = discord.Embed(ttembed.set_field_at(
+    newembed = discord.Embed(embed.set_field_at(
         int(contentlist[0]) - 1,
         time,
         va,
         inline=False))
-    await message.edit(ttembed=newembed)
+    await message.edit(embed=newembed)
 
 
 @client.event
