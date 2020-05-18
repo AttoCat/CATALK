@@ -104,8 +104,7 @@ async def ttedit(message):
         name=time,
         value=contentlist[0],
         inline=False))
-    message = client.get_channel(TT_ID).last_message_id
-    await message.edit(embed=newembed)
+    await embed.edit(embed=newembed)
 
 
 @client.event
