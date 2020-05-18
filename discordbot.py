@@ -95,16 +95,16 @@ async def ttset(message):
 
 async def ttedit(message):
     TT_ID = 711397925103599621
-    embed = client.get_channel(TT_ID).last_message_id
     contentlist = message.content[10:].split()
     time = f"{contentlist[0]}時間目"
     idn = int(contentlist[0])
-    newembed = discord.Embed(embed.set_filed(
+    message = client.get_channel(TT_ID).last_message_id
+    newembed = discord.Embed(message.set_filed_at(
         index=idn,
         name=time,
         value=contentlist[0],
         inline=False))
-    await embed.edit(embed=newembed)
+    await message.edit(embed=newembed)
 
 
 @client.event
