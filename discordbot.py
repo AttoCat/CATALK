@@ -102,7 +102,7 @@ async def ttedit(message):
     newembed = discord.Embed(message.set_filed_at(
         index=idn,
         name=time,
-        value=contentlist[0],
+        value=contentlist[1],
         inline=False))
     await message.edit(embed=newembed)
 
