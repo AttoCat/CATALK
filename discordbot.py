@@ -116,7 +116,6 @@ async def ttedit(message):
             value=tt[num - 1],
             inline=False)
         if not tt[num - 1] in classlist:
-            await message.delete()
             embed = discord.Embed(
                 title="Error",
                 description=f"不正な引数です！\nInvalid argument passed.",
