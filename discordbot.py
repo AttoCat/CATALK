@@ -54,11 +54,13 @@ async def aisatu(message):
 
 
 async def ttset(message):
+    global classlist
     classlist = [
         "英語", "国語", "数学", "理科", "社会", "保体",
         "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
     TT_ID = 711397925103599621
+    global tt
     tt = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
@@ -96,14 +98,31 @@ async def ttset(message):
 async def ttedit(message):
     TT_ID = 711397925103599621
     contentlist = message.content[10:].split()
-    time = f"{contentlist[0]}時間目"
-    idn = int(contentlist[0])
-    message = client.get_channel(TT_ID).last_message_id
-    newembed = discord.Embed(message.set_field_at(
-        index=idn,
-        name=time,
-        value=contentlist[1],
-        inline=False))
+    idn = (int(contentlist[0]) - 1)
+    ttchannel = client.get_channel(TT_ID)
+    messageid = int(ttchannel.last_message_id)
+    message = await ttchannel.fetch_message(messageid)
+    tt[idn] = contentlist[1]
+    newembed = discord.Embed(
+        title="時間割",
+        description="明日の時間割",
+        color=0x0080ff)
+    num = 0
+    for jugyo in tt:
+        num += 1
+        t = f"{num}時間目"
+        newembed.add_field(
+            name=t,
+            value=tt[num - 1],
+            inline=False)
+        if not tt[num - 1] in classlist:
+            await message.delete()
+            embed = discord.Embed(
+                title="Error",
+                description=f"不正な引数です！\nInvalid argument passed.",
+                color=0xff0000)
+            await message.channel.send(embed=embed, delete_after=10)
+            return
     await message.edit(embed=newembed)
 
 
