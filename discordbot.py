@@ -123,6 +123,7 @@ async def ttedit(message):
             await message.delete()
             await message.channel.send(embed=embed, delete_after=10)
             return
+    await message.delete()
     await message_content.edit(embed=newembed)
 
 
