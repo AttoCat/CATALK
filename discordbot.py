@@ -59,6 +59,7 @@ async def ttset(message):
         "英語", "国語", "数学", "理科", "社会", "保体",
         "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
+    global TT_ID
     TT_ID = 711397925103599621
     global tt
     tt = message.content[9:].split()
@@ -96,7 +97,6 @@ async def ttset(message):
 
 
 async def ttedit(message):
-    TT_ID = 711397925103599621
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
     ttchannel = client.get_channel(TT_ID)
