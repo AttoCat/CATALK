@@ -59,7 +59,6 @@ async def ttset(message):
         "英語", "国語", "数学", "理科", "社会", "保体",
         "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
-    global TT_ID
     TT_ID = 711397925103599621
     global tt
     tt = message.content[9:].split()
@@ -97,11 +96,12 @@ async def ttset(message):
 
 
 async def ttedit(message):
+    TT_ID = 711397925103599621
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
     ttchannel = client.get_channel(TT_ID)
-    messageid = int(ttchannel.last_message_id)
-    message = await ttchannel.fetch_message(messageid)
+    message_id = int(ttchannel.last_message_id)
+    message_content = await ttchannel.fetch_message(message_id)
     tt[idn] = contentlist[1]
     newembed = discord.Embed(
         title="時間割",
@@ -121,9 +121,10 @@ async def ttedit(message):
                 title="Error",
                 description=f"不正な引数です！\nInvalid argument passed.",
                 color=0xff0000)
+            await message.delete()
             await message.channel.send(embed=embed, delete_after=10)
             return
-    await message.edit(embed=newembed)
+    await message_content.edit(embed=newembed)
 
 
 @client.event
