@@ -10,7 +10,7 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 
 #const
-CH_STARTUP = 706779308211044352
+CH_STARTUP = int(os.getenv("CH_STARTUP", "706779308211044352"))
 
 
 @client.event
