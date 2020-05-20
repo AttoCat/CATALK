@@ -1,3 +1,4 @@
+
 import os
 
 import dotenv
@@ -17,10 +18,6 @@ async def on_ready():
     print(discord.__version__)
     channel = client.get_channel(Start_ID)
     await channel.send("正常に起動しました")
-    # ttlog = 712238123605557269
-    # tt_id = (client.get_channel(ttlog)).last_message_id
-    # global tt
-    # tt = await (client.get_channel(ttlog)).fetch_message(tt_id)
 
 
 async def aisatu(message):
@@ -95,7 +92,6 @@ async def ttset(message):
             return
     global ttembed
     ttembed = embed
-    await client.get_channel(712238123605557269).send(str(tt))
     await client.get_channel(TT_ID).send(embed=ttembed)
     await message.delete()
 
@@ -107,7 +103,7 @@ async def ttedit(message):
     ttchannel = client.get_channel(TT_ID)
     message_id = int(ttchannel.last_message_id)
     message_content = await ttchannel.fetch_message(message_id)
-    tt[idn] = str(contentlist[1])
+    tt[idn] = contentlist[1]
     newembed = discord.Embed(
         title="時間割",
         description="明日の時間割",
@@ -128,10 +124,8 @@ async def ttedit(message):
             await message.delete()
             await message.channel.send(embed=embed, delete_after=10)
             return
-    ttlog = client.get_channel(712238123605557269)
-    await client.get_channel(ttlog).send(str(tt))
-    await message_content.edit(embed=newembed)
     await message.delete()
+    await message_content.edit(embed=newembed)
 
 
 @client.event
