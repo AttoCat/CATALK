@@ -14,15 +14,15 @@ Start_ID = 706779308211044352
 
 @client.event
 async def on_ready():
-    ttlog = 712238123605557269
-    tt_id = (client.get_channel(ttlog)).last_message_id
-    global tt
-    tt = await (client.get_channel(ttlog)).fetch_message(tt_id)
     print("on_ready")
     print(discord.__version__)
     channel = client.get_channel(Start_ID)
     await channel.send("正常に起動しました")
-    await channel.send("現在のタイムテーブルは\n" + tt)
+    ttlog = 712238123605557269
+    tt_id = client.get_channel(ttlog).last_message_id
+    global tt
+    tt = await client.get_channel(ttlog).fetch_message(tt_id)
+    await client.get_channel(Start_ID).send("現在のタイムテーブルは\n" + tt)
 
 
 async def aisatu(message):
@@ -66,6 +66,7 @@ async def ttset(message):
         "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
     TT_ID = 711397925103599621
+    global tt
     tt = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
