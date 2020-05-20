@@ -12,6 +12,8 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 # const
 CH_STARTUP = int(os.getenv("CH_STARTUP", "706779308211044352"))
 CH_TIMETABLE = int(os.getenv("CH_TIMETABLE", "711397925103599621"))
+CH_SAVE_TIMETABLE = int(os.getenv("CH_SAVE_TIMETABLE", "712238123605557269"))
+
 
 # function
 async def aisatu(message):
@@ -86,7 +88,7 @@ async def ttset(message):
     global ttembed
     ttembed = embed
     await client.get_channel(CH_TIMETABLE).send(embed=ttembed)
-    await client.get_channel(712238123605557269).send(tt)
+    await client.get_channel(CH_SAVE_TIMETABLE).send(tt)
     await message.delete()
 
 
@@ -120,7 +122,7 @@ async def ttedit(message):
             return
     await message.delete()
     await message_content.edit(embed=newembed)
-    await client.get_channel(712238123605557269).send(tt)
+    await client.get_channel(CH_SAVE_TIMETABLE).send(tt)
 
 
 # event
