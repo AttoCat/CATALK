@@ -17,10 +17,10 @@ async def on_ready():
     print(discord.__version__)
     channel = client.get_channel(Start_ID)
     await channel.send("正常に起動しました")
-    ttlog = 712238123605557269
-    tt_id = (client.get_channel(ttlog)).last_message_id
-    global tt
-    tt = await (client.get_channel(ttlog)).fetch_message(tt_id)
+    # ttlog = 712238123605557269
+    # tt_id = (client.get_channel(ttlog)).last_message_id
+    # global tt
+    # tt = await (client.get_channel(ttlog)).fetch_message(tt_id)
 
 
 async def aisatu(message):
@@ -64,6 +64,7 @@ async def ttset(message):
         "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
     TT_ID = 711397925103599621
+    global tt
     tt = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
@@ -107,7 +108,6 @@ async def ttedit(message):
     message_id = int(ttchannel.last_message_id)
     message_content = await ttchannel.fetch_message(message_id)
     tt[idn] = str(contentlist[1])
-    print(tt)
     newembed = discord.Embed(
         title="時間割",
         description="明日の時間割",
@@ -128,10 +128,10 @@ async def ttedit(message):
             await message.delete()
             await message.channel.send(embed=embed, delete_after=10)
             return
-    await message.delete()
     ttlog = client.get_channel(712238123605557269)
     await client.get_channel(ttlog).send(str(tt))
     await message_content.edit(embed=newembed)
+    await message.delete()
 
 
 @client.event
