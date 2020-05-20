@@ -9,17 +9,11 @@ client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 
-#const
+# const
 CH_STARTUP = int(os.getenv("CH_STARTUP", "706779308211044352"))
 
 
-@client.event
-async def on_ready():
-    print(discord.__version__)
-    channel = client.get_channel(CH_STARTUP)
-    await channel.send("正常に起動しました")
-
-
+# function
 async def aisatu(message):
     d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     d_today = d_now.strftime(f"\n今日の日付は%-m月%-d日です。")
@@ -128,6 +122,14 @@ async def ttedit(message):
     await message.delete()
     await message_content.edit(embed=newembed)
     await client.get_channel(712238123605557269).send(tt)
+
+
+# event
+@client.event
+async def on_ready():
+    print(discord.__version__)
+    channel = client.get_channel(CH_STARTUP)
+    await channel.send("正常に起動しました")
 
 
 @client.event
