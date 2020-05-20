@@ -96,14 +96,9 @@ async def ttset(message):
 
 
 async def ttedit(message):
-    try:
-        tt
-    except NameError:
-        ttlog = 712238123605557269
-        tt_id = client.get_channel(ttlog).last_message_id
-        global tt
-        tt = str(await client.get_channel(ttlog).fetch_message(tt_id))
-        print(tt)
+    ttlog = 712238123605557269
+    tt_id = client.get_channel(ttlog).last_message_id
+    tt = str(await client.get_channel(ttlog).fetch_message(tt_id))
     TT_ID = 711397925103599621
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
