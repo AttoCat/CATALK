@@ -52,7 +52,11 @@ error_channels = [
     CH_STARTUP, CH_TIMETABLE, CH_SAVE_TIMETABLE
 ]
 
+timetable = []
+
 # function
+
+
 async def error_channel(message):
     embed = discord.Embed(
         title="Error",
@@ -77,44 +81,55 @@ async def send_greeting(message):
 
 
 async def set_timetable(message):
+    global timetable
+    global save_timetable # timetableを文字列で保存する変数
+    global ttembed
+
+    # ここからエラー処理
     if message.channel.id in error_channels:
         await error_channel(message)
         return
-    num = 0
-    global tt
-    tt = message.content[9:].split()
-    embed = discord.Embed(
-        title="時間割",
-        description="明日の時間割",
-        color=0x0080ff)
-    if len(tt) > 6:
-        await message.delete()
+    if len(timetable) > 6:
         embed = discord.Embed(
             title="Error",
             description=f"引数の数が不正です！\nInvalid input.",
-            color=0xff0000)
+            color=0xff0000
+        )
+        await message.delete()
         await message.channel.send(embed=embed, delete_after=10)
         return
-    for jugyo in tt:
-        num += 1
-        t = f"{num}時間目"
-        embed.add_field(
-            name=t,
-            value=tt[num - 1],
-            inline=False)
-        if not tt[num - 1] in subjects:
-            await message.delete()
+    # ここまでエラー処理
+
+
+    timetable = message.content[9:].split()
+    embed = discord.Embed(
+        title="時間割",
+        color=0x0080ff
+    )
+    num = 1 # 1時間目から始まるので1で初期化
+    for subject in timetable:
+        # 先に不正かどうかのチェック
+        if not subject in subjects:
             embed = discord.Embed(
                 title="Error",
                 description=f"不正な引数です！\nInvalid argument passed.",
                 color=0xff0000)
             await message.channel.send(embed=embed, delete_after=10)
-            return
-    global ttembed
+            return #引っかかれば終了
+
+        # チェックが通ればembedに追加
+        embed.add_field(
+            name=f"{num}時間目",
+            value=timetable[num - 1],
+            inline=False
+        )
+        num += 1 #インクリメント
     ttembed = embed
+    save_timetable = " ".join(timetable) #ここでリストから文字列へ操作
     await client.get_channel(CH_TIMETABLE).send(embed=ttembed)
-    await client.get_channel(CH_SAVE_TIMETABLE).send(tt)
-    await message.delete()
+    
+    #文字列をdiscordにも送信して保存しておく
+    await client.get_channel(CH_SAVE_TIMETABLE).send(save_timetable) 
 
 
 async def edit_timetable(message):
