@@ -93,6 +93,7 @@ async def ttset(message):
     global ttembed
     ttembed = embed
     await client.get_channel(TT_ID).send(embed=ttembed)
+    await client.get_channel(712238123605557269).send(tt)
     await message.delete()
 
 
@@ -126,6 +127,7 @@ async def ttedit(message):
             return
     await message.delete()
     await message_content.edit(embed=newembed)
+    await client.get_channel(712238123605557269).send(tt)
 
 
 @client.event
