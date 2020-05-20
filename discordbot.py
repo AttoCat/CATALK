@@ -54,9 +54,8 @@ error_channels = [
 
 timetable = []
 
+
 # function
-
-
 async def error_channel(message):
     embed = discord.Embed(
         title="Error",
@@ -82,13 +81,12 @@ async def send_greeting(message):
 
 async def set_timetable(message):
     global timetable
-    global save_timetable # timetableを文字列で保存する変数
+    global save_timetable
     global ttembed
-
-    # ここからエラー処理
     if message.channel.id in error_channels:
         await error_channel(message)
         return
+    timetable = message.content[9:].split()
     if len(timetable) > 6:
         embed = discord.Embed(
             title="Error",
@@ -98,74 +96,85 @@ async def set_timetable(message):
         await message.delete()
         await message.channel.send(embed=embed, delete_after=10)
         return
-    # ここまでエラー処理
-
-
-    timetable = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
         color=0x0080ff
     )
-    num = 1 # 1時間目から始まるので1で初期化
+    num = 1
     for subject in timetable:
-        # 先に不正かどうかのチェック
         if not subject in subjects:
             embed = discord.Embed(
                 title="Error",
                 description=f"不正な引数です！\nInvalid argument passed.",
                 color=0xff0000)
             await message.channel.send(embed=embed, delete_after=10)
-            return #引っかかれば終了
-
-        # チェックが通ればembedに追加
+            return
         embed.add_field(
             name=f"{num}時間目",
             value=timetable[num - 1],
             inline=False
         )
-        num += 1 #インクリメント
+        num += 1
     ttembed = embed
-    save_timetable = " ".join(timetable) #ここでリストから文字列へ操作
+    save_timetable = " ".join(timetable)
     await client.get_channel(CH_TIMETABLE).send(embed=ttembed)
-    
-    #文字列をdiscordにも送信して保存しておく
-    await client.get_channel(CH_SAVE_TIMETABLE).send(save_timetable) 
+    await client.get_channel(CH_SAVE_TIMETABLE).send(save_timetable)
 
 
 async def edit_timetable(message):
+    global timetable
+    global save_timetable
+    global ttembed
+    # エラー処理
     if message.channel.id in error_channels:
         await error_channel(message)
         return
-    CH_TIMETABLE = 711397925103599621
-    contentlist = message.content[10:].split()
-    idn = (int(contentlist[0]) - 1)
-    ttchannel = client.get_channel(CH_TIMETABLE)
-    message_id = int(ttchannel.last_message_id)
-    message_content = await ttchannel.fetch_message(message_id)
-    tt[idn] = str(contentlist[1])
-    newembed = discord.Embed(
+    # ttがない場合にセーブから復元
+    if timetable == []:
+        channel = client.get_channel(CH_SAVE_TIMETABLE)
+        message_id = channel.last_message_id
+        save = await channel.fetch_message(message_id) # この変数をmessageと命名すると次の処理と干渉する
+        timetable = save.content.split()
+    # メッセージから時間と科目を取得
+    temp = message.content[10:].split()
+    num = int(temp[0]) - 1
+    subject = str(temp[1])
+    # リストの該当箇所を上書き
+    timetable[num] = subject
+    # 守備範囲拡張
+    if len(temp) > 2 or len(timetable) > 6 or num > 6:
+    # 以下set同様
+        embed = discord.Embed(
+            title="Error",
+            description=f"引数の数が不正です！\nInvalid input.",
+            color=0xff0000
+        )
+        await message.delete()
+        await message.channel.send(embed=embed, delete_after=10)
+        return
+    embed = discord.Embed(
         title="時間割",
-        description="明日の時間割",
-        color=0x0080ff)
-    num = 0
-    for jugyo in tt:
-        num += 1
-        t = f"{num}時間目"
-        newembed.add_field(
-            name=t,
-            value=tt[num - 1],
-            inline=False)
-        if not tt[num - 1] in subjects:
+        color=0x0080ff
+    )
+    num = 1
+    for subject in timetable:
+        if not subject in subjects:
             embed = discord.Embed(
                 title="Error",
                 description=f"不正な引数です！\nInvalid argument passed.",
                 color=0xff0000)
-            await message.delete()
             await message.channel.send(embed=embed, delete_after=10)
             return
-    await message.delete()
-    await message_content.edit(embed=newembed)
-    await client.get_channel(CH_SAVE_TIMETABLE).send(tt)
+        embed.add_field(
+            name=f"{num}時間目",
+            value=timetable[num - 1],
+            inline=False
+        )
+        num += 1
+    ttembed = embed
+    save_timetable = " ".join(timetable)
+    await client.get_channel(CH_TIMETABLE).send(embed=ttembed)
+    await client.get_channel(CH_SAVE_TIMETABLE).send(save_timetable)
 
 
 # event
