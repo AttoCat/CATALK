@@ -103,7 +103,7 @@ async def ttedit(message):
     ttchannel = client.get_channel(TT_ID)
     message_id = int(ttchannel.last_message_id)
     message_content = await ttchannel.fetch_message(message_id)
-    tt[idn] = contentlist[1]
+    tt[idn] = str(contentlist[1])
     newembed = discord.Embed(
         title="時間割",
         description="明日の時間割",
