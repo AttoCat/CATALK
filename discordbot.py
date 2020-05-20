@@ -11,7 +11,7 @@ TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 # const
 CH_STARTUP = int(os.getenv("CH_STARTUP", "706779308211044352"))
-
+CH_TIMETABLE = int(os.getenv("CH_TIMETABLE", "711397925103599621"))
 
 # function
 async def aisatu(message):
@@ -54,7 +54,6 @@ async def ttset(message):
         "英語", "国語", "数学", "理科", "社会", "保体",
         "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"]
     num = 0
-    TT_ID = 711397925103599621
     global tt
     tt = message.content[9:].split()
     embed = discord.Embed(
@@ -86,16 +85,16 @@ async def ttset(message):
             return
     global ttembed
     ttembed = embed
-    await client.get_channel(TT_ID).send(embed=ttembed)
+    await client.get_channel(CH_TIMETABLE).send(embed=ttembed)
     await client.get_channel(712238123605557269).send(tt)
     await message.delete()
 
 
 async def ttedit(message):
-    TT_ID = 711397925103599621
+    CH_TIMETABLE = 711397925103599621
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
-    ttchannel = client.get_channel(TT_ID)
+    ttchannel = client.get_channel(CH_TIMETABLE)
     message_id = int(ttchannel.last_message_id)
     message_content = await ttchannel.fetch_message(message_id)
     tt[idn] = str(contentlist[1])
