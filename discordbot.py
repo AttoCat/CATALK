@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-# const
+# consts
 CH_STARTUP = int(os.getenv("CH_STARTUP", "706779308211044352"))
 CH_TIMETABLE = int(os.getenv("CH_TIMETABLE", "711397925103599621"))
 CH_SAVE_TIMETABLE = int(os.getenv("CH_SAVE_TIMETABLE", "712238123605557269"))
@@ -55,7 +55,7 @@ error_channels = [
 timetable = []
 
 
-# function
+# functions
 async def error_channel(message):
     embed = discord.Embed(
         title="Error",
@@ -81,8 +81,6 @@ async def send_greeting(message):
 
 async def set_timetable(message):
     global timetable
-    global save_timetable
-    global ttembed
     if message.channel.id in error_channels:
         await error_channel(message)
         return
@@ -90,7 +88,10 @@ async def set_timetable(message):
     if len(timetable) > 6:
         embed = discord.Embed(
             title="Error",
-            description=f"引数の数が不正です！\nInvalid input.",
+            description=(
+                f"引数の数が不正です！\n"
+                "Invalid input."
+            ),
             color=0xff0000
         )
         await message.delete()
@@ -105,8 +106,12 @@ async def set_timetable(message):
         if not subject in subjects:
             embed = discord.Embed(
                 title="Error",
-                description=f"不正な引数です！\nInvalid argument passed.",
-                color=0xff0000)
+                description=(
+                    f"不正な引数です！\n"
+                    "Invalid argument passed."
+                ),
+                color=0xff0000
+            )
             await message.channel.send(embed=embed, delete_after=10)
             return
         embed.add_field(
@@ -123,30 +128,25 @@ async def set_timetable(message):
 
 async def edit_timetable(message):
     global timetable
-    global save_timetable
-    global ttembed
-    # エラー処理
     if message.channel.id in error_channels:
         await error_channel(message)
         return
-    # ttがない場合にセーブから復元
     if timetable == []:
         channel = client.get_channel(CH_SAVE_TIMETABLE)
         message_id = channel.last_message_id
-        save = await channel.fetch_message(message_id) # この変数をmessageと命名すると次の処理と干渉する
+        save = await channel.fetch_message(message_id)
         timetable = save.content.split()
-    # メッセージから時間と科目を取得
     temp = message.content[10:].split()
     num = int(temp[0]) - 1
     subject = str(temp[1])
-    # リストの該当箇所を上書き
     timetable[num] = subject
-    # 守備範囲拡張
     if len(temp) > 2 or len(timetable) > 6 or num > 6:
-    # 以下set同様
         embed = discord.Embed(
             title="Error",
-            description=f"引数の数が不正です！\nInvalid input.",
+            description=(
+                f"引数の数が不正です！\n"
+                "Invalid input."
+            ),
             color=0xff0000
         )
         await message.delete()
@@ -161,8 +161,12 @@ async def edit_timetable(message):
         if not subject in subjects:
             embed = discord.Embed(
                 title="Error",
-                description=f"不正な引数です！\nInvalid argument passed.",
-                color=0xff0000)
+                description=(
+                    f"不正な引数です！\n"
+                    "Invalid argument passed."
+                ),
+                color=0xff0000
+            )
             await message.channel.send(embed=embed, delete_after=10)
             return
         embed.add_field(
@@ -177,7 +181,7 @@ async def edit_timetable(message):
     await client.get_channel(CH_SAVE_TIMETABLE).send(save_timetable)
 
 
-# event
+# events
 @client.event
 async def on_ready():
     print(discord.__version__)
@@ -189,7 +193,7 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot:
         return
-    elif (message.content == "やあ！") or (message.content == "やあ!"):
+    elif message.content in ["やあ！", "やあ!"]:
         await send_greeting(message)
     elif message.content.startswith("ct!ttset "):
         await set_timetable(message)
