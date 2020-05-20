@@ -15,7 +15,7 @@ CH_SAVE_TIMETABLE = int(os.getenv("CH_SAVE_TIMETABLE", "712238123605557269"))
 
 
 # lists
-morning = [
+greetings = [
     "",
     "こんばんは。もう日付も変わっていますね。早く寝たほうがいいんじゃないですか？",
     "！？ こんばんは……まだ起きていたんですか？こんな深夜に話しかけられたらびっくりするじゃないですか、寝てくださいよ…。",
@@ -43,7 +43,7 @@ morning = [
     "Good evening. 深夜帯、かっこよく言うとmidnightですね。もっと英語使いたいです。"
 ]
 
-classlist = [
+subjects = [
     "英語", "国語", "数学", "理科", "社会", "保体",
     "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"
 ]
@@ -72,7 +72,7 @@ async def send_greeting(message):
         return
     d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     d_today = d_now.strftime(f"\n今日の日付は%-m月%-d日です。")
-    msg = morning[d_now.hour]
+    msg = greetings[d_now.hour]
     await message.channel.send(f"{msg}" + d_today)
 
 
@@ -102,7 +102,7 @@ async def set_timetable(message):
             name=t,
             value=tt[num - 1],
             inline=False)
-        if not tt[num - 1] in classlist:
+        if not tt[num - 1] in subjects:
             await message.delete()
             embed = discord.Embed(
                 title="Error",
@@ -140,7 +140,7 @@ async def edit_timetable(message):
             name=t,
             value=tt[num - 1],
             inline=False)
-        if not tt[num - 1] in classlist:
+        if not tt[num - 1] in subjects:
             embed = discord.Embed(
                 title="Error",
                 description=f"不正な引数です！\nInvalid argument passed.",
