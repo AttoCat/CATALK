@@ -14,14 +14,15 @@ Start_ID = 706779308211044352
 
 @client.event
 async def on_ready():
-    print("on_ready")
-    print(discord.__version__)
-    channel = client.get_channel(Start_ID)
-    await channel.send("正常に起動しました")
     ttlog = 712238123605557269
     tt_id = (client.get_channel(ttlog)).last_message_id
     global tt
     tt = await (client.get_channel(ttlog)).fetch_message(tt_id)
+    print("on_ready")
+    print(discord.__version__)
+    channel = client.get_channel(Start_ID)
+    await channel.send("正常に起動しました")
+    await channel.send("現在のタイムテーブルは\n" + tt)
 
 
 async def aisatu(message):
