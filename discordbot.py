@@ -57,7 +57,7 @@ async def aisatu(message):
     await message.channel.send(f"{msg}" + d_today)
 
 
-async def set_tt(message):
+async def ttset(message):
     global classlist
     classlist = [
         "英語", "国語", "数学", "理科", "社会", "保体",
@@ -99,15 +99,15 @@ async def set_tt(message):
     await message.delete()
 
 
-async def edit_tt(message):
+async def ttedit(message):
     TT_ID = 711397925103599621
-    content = str(message.content[10:])
-    classnum = int(content[:1]) - 1
-    classjugyo = str(content[2:])
+    contentlist = message.content[10:].split()
+    idn = (int(contentlist[0]) - 1)
     ttchannel = client.get_channel(TT_ID)
     message_id = int(ttchannel.last_message_id)
     message_content = await ttchannel.fetch_message(message_id)
-    tt[classnum] = classjugyo
+    tt[idn] = str(contentlist[1])
+    print(tt)
     newembed = discord.Embed(
         title="時間割",
         description="明日の時間割",
@@ -128,9 +128,9 @@ async def edit_tt(message):
             await message.delete()
             await message.channel.send(embed=embed, delete_after=10)
             return
+    await message.delete()
     ttlog = client.get_channel(712238123605557269)
     await client.get_channel(ttlog).send(str(tt))
-    await message.delete()
     await message_content.edit(embed=newembed)
 
 
@@ -151,8 +151,8 @@ async def on_message(message):
     elif (message.content == "やあ！") or (message.content == "やあ!"):
         await aisatu(message)
     elif message.content.startswith("ct!ttset "):
-        await set_tt(message)
+        await ttset(message)
     elif message.content.startswith("ct!ttedit "):
-        await edit_tt(message)
+        await ttedit(message)
 
 client.run(TOKEN)
