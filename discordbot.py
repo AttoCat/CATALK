@@ -48,9 +48,28 @@ classlist = [
     "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"
 ]
 
+error_channels = [
+    CH_STARTUP, CH_TIMETABLE, CH_SAVE_TIMETABLE
+]
 
 # function
+async def error_channel(message):
+    embed = discord.Embed(
+        title="Error",
+        description=(
+            "ここでは実行できません！\n"
+            "Cannot run program here!"
+        ),
+        color=0xff0000
+    )
+    await message.delete()
+    await message.channel.send(embed=embed, delete_after=10)
+
+
 async def send_greeting(message):
+    if message.channel.id in error_channels:
+        await error_channel(message)
+        return
     d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     d_today = d_now.strftime(f"\n今日の日付は%-m月%-d日です。")
     msg = morning[d_now.hour]
@@ -58,6 +77,9 @@ async def send_greeting(message):
 
 
 async def set_timetable(message):
+    if message.channel.id in error_channels:
+        await error_channel(message)
+        return
     num = 0
     global tt
     tt = message.content[9:].split()
@@ -96,6 +118,9 @@ async def set_timetable(message):
 
 
 async def edit_timetable(message):
+    if message.channel.id in error_channels:
+        await error_channel(message)
+        return
     CH_TIMETABLE = 711397925103599621
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
@@ -139,16 +164,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author.bot:
-        return
-    elif message.channel.id == CH_STARTUP:  # 起動ログチャンネルで発言してもエラー&削除
-        embed = discord.Embed(
-            title="Error",
-            description=(
-                "ここでは実行できません！\nCannot perform this operation here."),
-            color=0xff0000)
-        await message.delete()
-        await client.get_channel(CH_STARTUP).send(
-            embed=embed, delete_after=10)
         return
     elif (message.content == "やあ！") or (message.content == "やあ!"):
         await send_greeting(message)
