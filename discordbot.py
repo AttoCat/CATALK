@@ -8,13 +8,15 @@ dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-Start_ID = 706779308211044352
+
+#const
+CH_STARTUP = 706779308211044352
 
 
 @client.event
 async def on_ready():
     print(discord.__version__)
-    channel = client.get_channel(Start_ID)
+    channel = client.get_channel(CH_STARTUP)
     await channel.send("正常に起動しました")
 
 
@@ -132,14 +134,14 @@ async def ttedit(message):
 async def on_message(message):
     if message.author.bot:
         return
-    elif message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
+    elif message.channel.id == CH_STARTUP:  # 起動ログチャンネルで発言してもエラー&削除
         embed = discord.Embed(
             title="Error",
             description=(
                 "ここでは実行できません！\nCannot perform this operation here."),
             color=0xff0000)
         await message.delete()
-        await client.get_channel(Start_ID).send(
+        await client.get_channel(CH_STARTUP).send(
             embed=embed, delete_after=10)
         return
     elif (message.content == "やあ！") or (message.content == "やあ!"):
