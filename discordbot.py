@@ -8,7 +8,6 @@ dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-
 # const
 CH_STARTUP = int(os.getenv("CH_STARTUP", "706779308211044352"))
 CH_TIMETABLE = int(os.getenv("CH_TIMETABLE", "711397925103599621"))
@@ -51,14 +50,14 @@ classlist = [
 
 
 # function
-async def aisatu(message):
+async def send_greeting(message):
     d_now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     d_today = d_now.strftime(f"\n今日の日付は%-m月%-d日です。")
     msg = morning[d_now.hour]
     await message.channel.send(f"{msg}" + d_today)
 
 
-async def ttset(message):
+async def set_timetable(message):
     num = 0
     global tt
     tt = message.content[9:].split()
@@ -96,7 +95,7 @@ async def ttset(message):
     await message.delete()
 
 
-async def ttedit(message):
+async def edit_timetable(message):
     CH_TIMETABLE = 711397925103599621
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
@@ -152,10 +151,10 @@ async def on_message(message):
             embed=embed, delete_after=10)
         return
     elif (message.content == "やあ！") or (message.content == "やあ!"):
-        await aisatu(message)
+        await send_greeting(message)
     elif message.content.startswith("ct!ttset "):
-        await ttset(message)
+        await set_timetable(message)
     elif message.content.startswith("ct!ttedit "):
-        await ttedit(message)
+        await edit_timetable(message)
 
 client.run(TOKEN)
