@@ -44,6 +44,11 @@ morning = [
     "こんばんは。学生諸君はもう寝たほうがいいですね。開発者も学生ですけど…。",
     "Good evening. 深夜帯、かっこよく言うとmidnightですね。もっと英語使いたいです。"
 ]
+ryaku = {
+    "こ": "国語", "す": "数学", "り": "理科", "しゃ": "社会",
+    "え": "英語", "ほ": "保体", "お": "音楽", "び": "美術",
+    "ぎ": "技術", "か": "家庭", "ど": "道徳", "そ": "総合",
+    "が": "学活", "た": "その他"}
 
 
 async def error_channel(message):
@@ -92,6 +97,8 @@ async def timetable(message):
         return
     for jugyo in tt:
         num += 1
+        if tt[num - 1] in ryaku:
+            tt[num - 1] = ryaku[str(tt[num - 1])]
         t = f"{num}時間目"
         embed.add_field(
             name=t,
