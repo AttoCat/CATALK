@@ -80,10 +80,8 @@ async def aisatu(message):
     await message.channel.send(f"{msg}" + d_today)
 
 
-async def set_tt(message):
+async def timetable(message):
     num = 0
-    global tt
-    tt = message.content[9:].split()
     embed = discord.Embed(
         title="時間割",
         description="明日の時間割",
@@ -103,8 +101,15 @@ async def set_tt(message):
             return
     global ttembed
     ttembed = embed
+
+
+async def set_tt(message):
+    global tt
+    tt = message.content[9:].split()
+    await timetable(message)
     await client.get_channel(TT_ID).send(embed=ttembed)
-    await client.get_channel(712238123605557269).send(tt)
+    log_tt = ','.join(tt)
+    await client.get_channel(TTlog_ID).send(log_tt)
     await message.delete()
 
 
@@ -114,7 +119,7 @@ async def edit_tt(message):
         logch = client.get_channel(TTlog_ID)
         logid = logch.last_message_id
         savett = await logch.fetch_message(logid)
-        tt = savett.content.split()
+        tt = savett.content.split(',')
     contentlist = message.content[10:].split()
     idn = (int(contentlist[0]) - 1)
     ttchannel = client.get_channel(TT_ID)
@@ -122,24 +127,12 @@ async def edit_tt(message):
     message_content = await ttchannel.fetch_message(message_id)
     subject = str(contentlist[1])
     tt[idn] = subject
-    newembed = discord.Embed(
-        title="時間割",
-        description="明日の時間割",
-        color=0x0080ff)
-    num = 0
-    for jugyo in tt:
-        num += 1
-        t = f"{num}時間目"
-        newembed.add_field(
-            name=t,
-            value=tt[num - 1],
-            inline=False)
-        if not tt[num - 1] in classlist:
-            await error_arguments(message)
-            return
+    await timetable(message)
+    newembed = ttembed
     await message.delete()
     await message_content.edit(embed=newembed)
-    await client.get_channel(TTlog_ID).send(tt)
+    log_tt = ','.join(tt)
+    await client.get_channel(TTlog_ID).send(log_tt)
 
 
 @client.event
