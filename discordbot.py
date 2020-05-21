@@ -13,10 +13,11 @@ Start_ID = 706779308211044352
 TT_ID = 711397925103599621
 TTlog_ID = 712238123605557269
 tt = []
-classlist = [
-    "英語", "国語", "数学", "理科", "社会", "保体",
-    "音楽", "美術", "技術", "家庭", "道徳", "総合", "学活", "その他"
-]
+classlist = {
+    "こ": "国語", "す": "数学", "り": "理科", "しゃ": "社会",
+    "え": "英語", "ほ": "保体", "お": "音楽", "び": "美術",
+    "ぎ": "技術", "か": "家庭", "ど": "道徳", "そ": "総合",
+    "が": "学活", "た": "その他"}
 morning = [
     "",
     "こんばんは。もう日付も変わっていますね。早く寝たほうがいいんじゃないですか？",
@@ -44,11 +45,6 @@ morning = [
     "こんばんは。学生諸君はもう寝たほうがいいですね。開発者も学生ですけど…。",
     "Good evening. 深夜帯、かっこよく言うとmidnightですね。もっと英語使いたいです。"
 ]
-ryaku = {
-    "こ": "国語", "す": "数学", "り": "理科", "しゃ": "社会",
-    "え": "英語", "ほ": "保体", "お": "音楽", "び": "美術",
-    "ぎ": "技術", "か": "家庭", "ど": "道徳", "そ": "総合",
-    "が": "学活", "た": "その他"}
 
 
 async def error_channel(message):
@@ -97,14 +93,14 @@ async def timetable(message):
         return
     for jugyo in tt:
         num += 1
-        if tt[num - 1] in ryaku:
-            tt[num - 1] = ryaku[str(tt[num - 1])]
+        if tt[num - 1] in classlist:
+            tt[num - 1] = classlist[str(tt[num - 1])]
         t = f"{num}時間目"
         embed.add_field(
             name=t,
             value=tt[num - 1],
             inline=False)
-        if not tt[num - 1] in classlist:
+        if not tt[num - 1] in classlist.values():
             await error_arguments(message)
             return
     global ttembed
