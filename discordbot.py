@@ -129,12 +129,20 @@ async def edit_tt(message):
         savett = await logch.fetch_message(logid)
         tt = savett.content.split(',')
     contentlist = message.content[10:].split()
-    idn = (int(contentlist[0]) - 1)
+    try:
+        idn = (int(contentlist[0]) - 1)
+    except ValueError:
+        await error_arguments(message)
+        return
     ttchannel = client.get_channel(TT_ID)
     message_id = int(ttchannel.last_message_id)
     message_content = await ttchannel.fetch_message(message_id)
     subject = str(contentlist[1])
-    tt[idn] = subject
+    try:
+        tt[idn] = subject
+    except IndexError:
+        await error_arguments(message)
+        return
     await timetable(message)
     newembed = ttembed
     await message.delete()
