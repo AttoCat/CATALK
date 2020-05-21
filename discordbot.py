@@ -8,6 +8,7 @@ dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
+
 Start_ID = 706779308211044352
 TT_ID = 711397925103599621
 TTlog_ID = 712238123605557269
