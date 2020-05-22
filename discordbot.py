@@ -147,6 +147,27 @@ async def edit_tt(message):
     await client.get_channel(TTlog_ID).send(log_tt)
 
 
+async def print_role(message):
+    member = message.guild.members
+    sinrai = message.guild.get_role(682220525992280095)
+    checklist = []
+    num = 0
+    for check in member:
+        role = member[num].roles
+        if sinrai in role:
+            checklist.append("○ " + str(member[num]))
+        else:
+            checklist.append("✕ " + str(member[num]))
+        num += 1
+    msg = "\n".join(checklist)
+    embed = discord.Embed(
+        title="ロールチェックの結果",
+        description=f"信頼できる人\n{msg}"
+    )
+    await message.delete()
+    await message.channel.send(embed=embed)
+
+
 @client.event
 async def on_ready():
     print(discord.__version__)
@@ -166,5 +187,7 @@ async def on_message(message):
         await set_tt(message)
     elif message.content.startswith("ct!ttedit "):
         await edit_tt(message)
+    elif message.content == "ct!role":
+        await print_role(message)
 
 client.run(TOKEN)
