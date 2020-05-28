@@ -168,6 +168,10 @@ async def print_role(message):
     await message.channel.send(embed=embed)
 
 
+async def bougen(message):
+    await message.channel.send("死ね！")
+
+
 @client.event
 async def on_ready():
     print(discord.__version__)
@@ -189,5 +193,7 @@ async def on_message(message):
         await edit_tt(message)
     elif message.content == "ct!role":
         await print_role(message)
+    elif message.content == "ct!bougen":
+        await bougen(message)
 
 client.run(TOKEN)
