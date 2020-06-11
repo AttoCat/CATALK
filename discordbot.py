@@ -3,7 +3,10 @@ import os
 import dotenv
 import datetime
 import discord
+from discord.ext import commands
 
+
+bot = commands.Bot(command_prefix='ct!')
 dotenv.load_dotenv()
 client = discord.Client()
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
@@ -105,13 +108,14 @@ async def timetable(message):
             return
     global ttembed
     ttembed = embed
+    await message.channel.send(embed=ttembed)
 
 
 async def set_tt(message):
     global tt
     tt = message.content[9:].split()
     await timetable(message)
-    await client.get_channel(TT_ID).send(embed=ttembed)
+    await message.channel.send(embed=ttembed)
     log_tt = ','.join(tt)
     await client.get_channel(TTlog_ID).send(log_tt)
     await message.delete()
@@ -142,7 +146,8 @@ async def edit_tt(message):
     await timetable(message)
     newembed = ttembed
     await message.delete()
-    await message_content.edit(embed=newembed)
+    await message_content.edit(embed=ttembed)
+    await message.channel.send(embed=newembed)
     log_tt = ','.join(tt)
     await client.get_channel(TTlog_ID).send(log_tt)
 
@@ -172,6 +177,10 @@ async def bougen(message):
     await message.channel.send("死ね！")
 
 
+async def protect(message):
+    await message.channel.send("ab!protect 602668987112751125")
+
+
 @client.event
 async def on_ready():
     print(discord.__version__)
@@ -195,5 +204,7 @@ async def on_message(message):
         await print_role(message)
     elif message.content == "ct!bougen":
         await bougen(message)
+    elif message.content == "ct!protect":
+        await protect(message)
 
 client.run(TOKEN)
