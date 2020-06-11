@@ -147,7 +147,6 @@ async def edit_tt(message):
     newembed = ttembed
     await message.delete()
     await message_content.edit(embed=ttembed)
-    await message.channel.send(embed=newembed)
     log_tt = ','.join(tt)
     await client.get_channel(TTlog_ID).send(log_tt)
 
