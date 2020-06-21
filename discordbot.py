@@ -205,5 +205,8 @@ async def on_message(message):
         await bougen(message)
     elif message.content == "ct!protect":
         await protect(message)
+    elif message.content.startswith("ct!say "):
+        await message.delete()
+        await message.channel.send(message.content[7:])
 
 client.run(TOKEN)
