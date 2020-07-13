@@ -151,62 +151,11 @@ async def edit_tt(message):
     await client.get_channel(TTlog_ID).send(log_tt)
 
 
-async def print_role(message):
-    member = message.guild.members
-    sinrai = message.guild.get_role(682220525992280095)
-    checklist = []
-    num = 0
-    for check in member:
-        role = member[num].roles
-        if sinrai in role:
-            checklist.append("○ " + str(member[num]))
-        else:
-            checklist.append("✕ " + str(member[num]))
-        num += 1
-    msg = "\n".join(checklist)
-    embed = discord.Embed(
-        title="ロールチェックの結果",
-        description=f"信頼できる人\n{msg}"
-    )
-    await message.delete()
-    await message.channel.send(embed=embed)
-
-
-async def bougen(message):
-    await message.channel.send("死ね！")
-
-
-async def protect(message):
-    await message.channel.send("ab!protect 602668987112751125")
-
-
 @client.event
 async def on_ready():
     print(discord.__version__)
     channel = client.get_channel(Start_ID)
     await channel.send("正常に起動しました")
 
-
-@client.event
-async def on_message(message):
-    if message.author.bot:
-        return
-    elif message.channel.id == Start_ID:  # 起動ログチャンネルで発言してもエラー&削除
-        return
-    elif (message.content == "やあ！") or (message.content == "やあ!"):
-        await aisatu(message)
-    elif message.content.startswith("ct!ttset "):
-        await set_tt(message)
-    elif message.content.startswith("ct!ttedit "):
-        await edit_tt(message)
-    elif message.content == "ct!role":
-        await print_role(message)
-    elif message.content == "ct!bougen":
-        await bougen(message)
-    elif message.content == "ct!protect":
-        await protect(message)
-    elif message.content.startswith("ct!say "):
-        await message.delete()
-        await message.channel.send(message.content[7:])
 
 client.run(TOKEN)
