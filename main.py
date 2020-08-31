@@ -9,8 +9,7 @@ dotenv.load_dotenv()
 TOKEN = os.getenv("TOKEN")
 PREFIX = os.getenv("PREFIX")
 EXTENSIONS = [
-    "cogs.timetable", "cogs.rolepanel"
-]
+    "cogs.timetable"]
 
 
 class Catalk(commands.Bot):
@@ -23,9 +22,6 @@ class Catalk(commands.Bot):
                 print(f"Loaded Extension {cog}.py.")
             except Exception:
                 traceback.print_exc()
-
-    async def on_ready(self):
-        print(f"Bot is ready! \nlibrary version:{discord.__version__}")
 
 
 if __name__ == '__main__':

@@ -39,7 +39,7 @@ class Timetable(commands.Cog):
             if jugyo in self.classlist:
                 jugyo = self.classlist[jugyo]
             else:
-                if not jugyo in self.classlist.values():
+                if jugyo not in self.classlist.values():
                     raise commands.BadArgument
             embed.add_field(
                 name=f"{num}時間目",
@@ -55,7 +55,7 @@ class Timetable(commands.Cog):
         id = self.ttlog.last_message_id
         msg = await self.ttlog.fetch_message(id)
         tt = msg.content.split(",")
-        tt[num-1] = value
+        tt[num - 1] = value
         chid = self.ttch.last_message_id
         ttmsg = await self.ttch.fetch_message(chid)
         kekka = []
@@ -67,7 +67,7 @@ class Timetable(commands.Cog):
             if jugyo in self.classlist:
                 jugyo = self.classlist[jugyo]
             else:
-                if not jugyo in self.classlist.values():
+                if jugyo not in self.classlist.values():
                     raise commands.BadArgument
             embed.add_field(
                 name=f"{num}時間目",
@@ -76,6 +76,63 @@ class Timetable(commands.Cog):
             num += 1
             kekka.append(jugyo)
         await ttmsg.edit(embed=embed)
+
+    @commands.command()
+    async def fetch(self, ctx, arg: int):
+        _ = await ctx.channel.fetch_message(arg)
+
+    @commands.command()
+    async def test(self, ctx):
+        a = 15
+        await eval(f"ctx.send({a})")
+
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.NotOwner):
+            embed = discord.Embed(
+                title="Error",
+                description=(
+                    "あなたにこのコマンドを実行する権限がありません！\nYou don't have permission."),
+                color=0xff0000)
+            await ctx.message.delete()
+            await ctx.channel.send(embed=embed, delete_after=10)
+            return
+        elif isinstance(error, commands.BadArgument):
+            embed = discord.Embed(
+                title="Error",
+                description=(
+                    "不正な引数です！\nInvalid argument passed."),
+                color=0xff0000)
+            await ctx.message.delete()
+            await ctx.channel.send(embed=embed, delete_after=10)
+            return
+        elif isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                title="Error",
+                description="想定しない引数が渡されました！\nInvalid input.",
+                color=0xff0000)
+            await ctx.message.delete()
+            await ctx.channel.send(embed=embed, delete_after=10)
+            return
+        elif isinstance(error, discord.NotFound):
+            print("NotFound")
+            return
+        elif isinstance(error, commands.TooManyArguments):
+            embed = discord.Embed(
+                title="Error",
+                description="引数の数が不正です！\nInvalid input.",
+                color=0xff0000)
+            await ctx.message.delete()
+            await ctx.channel.send(embed=embed, delete_after=10)
+            return
+        else:
+            embed = discord.Embed(
+                title="Error",
+                description=(
+                    f"不明なエラーが発生しました。\nエラー内容:\n{error}"),
+                color=0xff0000)
+            await ctx.message.delete()
+            await ctx.channel.send(embed=embed)
+            return
 
 
 def setup(bot):
