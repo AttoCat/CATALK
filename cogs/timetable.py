@@ -18,6 +18,11 @@ class Timetable(commands.Cog):
             "ぎ": "技術", "か": "家庭", "ど": "道徳", "そ": "総合",
             "が": "学活", "た": "その他"}
 
+    @commands.is_owner()
+    @commands.command()
+    async def say(self, ctx, *, content):
+        await ctx.send(content)
+
     @commands.group()
     async def tt(self, ctx):
         if ctx.invoked_subcommand is None:
@@ -133,6 +138,17 @@ class Timetable(commands.Cog):
             await ctx.message.delete()
             await ctx.channel.send(embed=embed)
             return
+
+    @commands.command()
+    async def t(self, ctx):
+        embed = discord.Embed(
+            title="「BadArgument(不正な引数）エラーです。」と表示されたんだけど！",
+            description="理由:その役職が存在しない")
+        embed.add_field(
+            name="対処法", value="その役職が存在するか**よく確かめる**\nよくあるのが大文字小文字のミス。", inline=False)
+        embed.add_field(
+            name="対処法2", value="**--create 引数**を付けてコマンドを使う\n例:`!rp2 add 役職 --create`", inline=False)
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
